@@ -1,0 +1,3 @@
+Commands Run for TypeScript
+
+npm i -D vite-plugin-checker
