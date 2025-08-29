@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 
 const RTr = {
@@ -6,7 +7,9 @@ const RTr = {
 };
 
 function getTitle(type?: string) {
-  if (type === 'heading') return <h1>{RTr.prefix + RTr.title}</h1>;
+  if (type === 'heading') {
+    return React.createElement('h1', null, `${RTr.prefix + RTr.title}`);
+  }
   return RTr.prefix + RTr.title;
 }
 
