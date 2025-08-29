@@ -1,3 +1,7 @@
-Commands Run for TypeScript
+Commands Ran seperately for TypeScript
+Just normal Vite + typescript was done before this
+No prettier config was done in project
 
 npm i -D vite-plugin-checker
+ - imported import checker from 'vite-plugin-checker'; in vite.config.ts
+ - added checker({ typescript: true }) in vite.config.ts plugins
