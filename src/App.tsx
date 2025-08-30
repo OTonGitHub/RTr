@@ -1,4 +1,4 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 import './App.css';
 
 const RTr = {
@@ -10,42 +10,7 @@ function getTitle(type?: string): unknown {
   if (type === 'heading') {
     return React.createElement('h1', null, `${RTr.prefix + RTr.title}`);
   }
-  return 'React + TypeScript';
-}
-
-const NirDobovizki = {
-  title: 'C# Concurrency',
-  pages: 350,
-};
-
-const StephenCleary = {
-  title: 'Concurrency in C# Cookbook',
-  pages: 250_000_000_000_000_00,
-  price: 23.55,
-};
-
-const RobertSedgewick = {
-  title: 'Algorithms',
-  pages: 10n,
-  price: 5.44,
-};
-
-const bookList = [NirDobovizki, StephenCleary, RobertSedgewick];
-
-function getBooks(): JSX.Element {
-  return (
-    <ul>
-      {bookList.map((book) => (
-        <li>
-          <div>Title: {book.title}</div>
-          <div>Pages: {book.pages}</div>
-          <div>
-            Safe: <strong>{String(Number.isSafeInteger(book.pages))}</strong>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
+  return <strong>React + TypeScript</strong>;
 }
 
 const list = [
@@ -67,23 +32,11 @@ const list = [
   },
 ];
 
-function getList(): JSX.Element {
-  return (
-    <ul>
-      {list.map((item) => (
-        <li>{item.title}</li>
-      ))}
-    </ul>
-  );
-}
-
 function App() {
   return (
     <>
       {getTitle('heading')}
       {getTitle()}
-      <p>{getBooks()}</p>
-      <p>{getList()}</p>
 
       <p>
         <label>
@@ -95,6 +48,31 @@ function App() {
         <label htmlFor='Date'>Date</label>
         <br />
         <input id='Date' type='date'></input>
+      </p>
+
+      <p>
+        <dl>
+          {list.map((item) => (
+            <dt key={item.objectID}>
+              {item.objectID}:{' '}
+              <a href={item.url}>
+                <b>{item.title} </b>
+              </a>
+              <dd>
+                <b>Author: </b>
+                {item.author}
+              </dd>
+              <dd>
+                <b>Comments: </b>
+                {item.num_comments}
+              </dd>
+              <dd>
+                <b>Points: </b>
+                {item.points}
+              </dd>
+            </dt>
+          ))}
+        </dl>
       </p>
     </>
   );
