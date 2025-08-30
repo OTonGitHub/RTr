@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import './App.css';
 
 const RTr = {
   prefix: 'The Road To ',
   title: 'React',
 };
+
+function getTitle(type?: string): unknown {
+  if (type === 'heading') {
+    return React.createElement('h1', null, `${RTr.prefix + RTr.title}`);
+  }
+  return 'React + TypeScript';
+}
 
 const NirDobovizki = {
   title: 'C# Concurrency',
@@ -25,14 +32,7 @@ const RobertSedgewick = {
 
 const bookList = [NirDobovizki, StephenCleary, RobertSedgewick];
 
-function getTitle(type?: string) {
-  if (type === 'heading') {
-    return React.createElement('h1', null, `${RTr.prefix + RTr.title}`);
-  }
-  return 'React + TypeScript';
-}
-
-function getBooks() {
+function getBooks(): JSX.Element {
   return (
     <ul>
       {bookList.map((book) => (
@@ -48,12 +48,42 @@ function getBooks() {
   );
 }
 
+const list = [
+  {
+    title: 'React',
+    url: 'https://react.dev/',
+    author: 'Jordan Walke',
+    num_comments: 3,
+    points: 4,
+    objectID: 0,
+  },
+  {
+    title: 'Redux',
+    url: 'https://redux.js.org/',
+    author: 'Dan Abramov, Andrew Clark',
+    num_comments: 2,
+    points: 5,
+    objectID: 1,
+  },
+];
+
+function getList(): JSX.Element {
+  return (
+    <ul>
+      {list.map((item) => (
+        <li>{item.title}</li>
+      ))}
+    </ul>
+  );
+}
+
 function App() {
   return (
     <>
       {getTitle('heading')}
       {getTitle()}
       <p>{getBooks()}</p>
+      <p>{getList()}</p>
 
       <p>
         <label>
