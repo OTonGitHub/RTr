@@ -13,7 +13,7 @@ function getTitle(type?: string): unknown {
   return <strong>React + TypeScript</strong>;
 }
 
-const list = [
+const initialPosts = [
   {
     title: 'React',
     url: 'https://react.dev/',
@@ -30,9 +30,28 @@ const list = [
     points: 5,
     objectID: 1,
   },
+  {
+    title: 'DaisyUI',
+    url: 'https://daisyui.com/',
+    author: 'Cherry Popeye',
+    num_comments: 7,
+    points: 3,
+    objectID: 2,
+  },
 ];
 
+const maxOfTwoNumbers = (num1: number, num2: number) =>
+  num1 > num2 ? num1 : num2;
+
 function App() {
+  const [posts, setPosts] = React.useState(initialPosts);
+  const handleReverse = () => {
+    setPosts(posts.slice().reverse());
+  };
+  const highScorePost = posts.reduce((max, current) =>
+    max.points > current.points ? max : current
+  );
+
   return (
     <>
       {getTitle('heading')}
@@ -51,13 +70,23 @@ function App() {
       </p>
 
       <p>
+        Points Highscore (Map-&gt;Reduce):{' '}
+        {posts.map((post) => post.points).reduce(maxOfTwoNumbers)}
+        <br />
+        {
+          `Post Highscore : ${highScorePost.title.toUpperCase()} with ${highScorePost.points} points`
+        }
+      </p>
+
+      <p>
         <dl>
-          {list.map((item) => (
+          {posts.map((item) => (
             <dt key={item.objectID}>
               {item.objectID}:{' '}
               <a href={item.url}>
                 <b>{item.title} </b>
               </a>
+              <input type='checkbox' />
               <dd>
                 <b>Author: </b>
                 {item.author}
@@ -73,6 +102,7 @@ function App() {
             </dt>
           ))}
         </dl>
+        <button onClick={handleReverse}>Reverse Posts</button>
       </p>
     </>
   );
