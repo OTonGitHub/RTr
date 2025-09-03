@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 
-const RTr = {
-  prefix: 'The Road To ',
-  title: 'React',
-};
+function getTitle(type?: string): React.ReactElement {
+  const RTr = {
+    prefix: 'The Road To ',
+    title: 'React',
+  };
 
-function getTitle(type?: string): unknown {
   if (type === 'heading') {
     return React.createElement('h1', null, `${RTr.prefix + RTr.title}`);
   }
@@ -40,22 +40,28 @@ const initialPosts = [
   },
 ];
 
-const maxOfTwoNumbers = (num1: number, num2: number) =>
-  num1 > num2 ? num1 : num2;
+function maxNumByProperty<T>(
+  getProp: (object: T) => number
+): (max: T, current: T) => T {
+  return (max: T, current: T) =>
+    getProp(current) > getProp(max) ? current : max;
+}
 
 function App() {
   const [posts, setPosts] = React.useState(initialPosts);
   const handleReverse = () => {
     setPosts(posts.slice().reverse());
   };
-  const highScorePost = posts.reduce((max, current) =>
-    max.points > current.points ? max : current
+
+  const highScorePost = posts.reduce(
+    maxNumByProperty((post) => post.points),
+    /*uses*/ posts[0]
   );
 
   return (
     <>
       {getTitle('heading')}
-      {getTitle()}
+      {getTitle('sub-heading')}
 
       <p>
         <label>
@@ -70,12 +76,9 @@ function App() {
       </p>
 
       <p>
-        Points Highscore (Map-&gt;Reduce):{' '}
-        {posts.map((post) => post.points).reduce(maxOfTwoNumbers)}
-        <br />
-        {
-          `Post Highscore : ${highScorePost.title.toUpperCase()} with ${highScorePost.points} points`
-        }
+        {`Post Highscore : ${highScorePost.title.toUpperCase()} with ${
+          highScorePost.points
+        } points`}
       </p>
 
       <p>
