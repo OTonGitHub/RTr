@@ -40,7 +40,7 @@ const initialPosts = [
   },
 ];
 
-function maxNumByProperty<T>(
+function maxBy<T>(
   getProp: (object: T) => number
 ): (max: T, current: T) => T {
   return (max: T, current: T) =>
@@ -54,7 +54,7 @@ function App() {
   };
 
   const highScorePost = posts.reduce(
-    maxNumByProperty((post) => post.points),
+    maxBy((post) => post.points),
     /*uses*/ posts[0]
   );
 
