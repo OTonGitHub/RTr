@@ -40,29 +40,25 @@ const initialPosts = [
   },
 ];
 
-function maxBy<T>(
-  getProp: (object: T) => number
-): (max: T, current: T) => T {
+function maxBy<T>(getProp: (object: T) => number): (max: T, current: T) => T {
   return (max: T, current: T) =>
     getProp(current) > getProp(max) ? current : max;
 }
 
 function App() {
-  const [posts, setPosts] = React.useState(initialPosts);
-  const handleReverse = () => {
-    setPosts(posts.slice().reverse());
-  };
-
-  const highScorePost = posts.reduce(
-    maxBy((post) => post.points),
-    /*uses*/ posts[0]
-  );
-
   return (
     <>
       {getTitle('heading')}
       {getTitle('sub-heading')}
+      <Form />
+      <List />
+    </>
+  );
+}
 
+function Form() {
+  return (
+    <>
       <p>
         <label>
           Text: <input type='text'></input>
@@ -74,7 +70,22 @@ function App() {
         <br />
         <input id='Date' type='date'></input>
       </p>
+    </>
+  );
+}
 
+function List() {
+  const [posts, setPosts] = React.useState(initialPosts);
+  const handleReverse = () => {
+    setPosts(posts.slice().reverse());
+  };
+
+  const highScorePost = posts.reduce(
+    maxBy((post) => post.points),
+    /*uses*/ posts[0]
+  );
+  return (
+    <>
       <p>
         {`Post Highscore : ${highScorePost.title.toUpperCase()} with ${
           highScorePost.points
